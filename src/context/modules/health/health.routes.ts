@@ -6,4 +6,4 @@ const healthRouter = Router()
 
 healthRouter.get("/", asyncHandler(healthController))
 
-export default { router: healthRouter, path: "/health" }
+export default { router: healthRouter, path: "/healthz" }
