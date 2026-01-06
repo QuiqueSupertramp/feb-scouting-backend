@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2023", // Código moderno
+    "module": "NodeNext", // ESM nativo en Node
+    "moduleDetection": "force", // Trata todos los archivos como módulos
+    "verbatimModuleSyntax": true, // Mantiene imports/exports tal cual
+    "strict": true, // TS estricto
+    "isolatedModules": true, // Necesario para TSX y ESM
+    "esModuleInterop": true, // Compatibilidad con CommonJS
+    "allowJs": true, // Permite importar JS y JSON
+    "resolveJsonModule": true, // Permite importar JSON
+    "noUncheckedIndexedAccess": true, // Más seguro al acceder a arrays/objetos
+    "noImplicitOverride": true, // Seguridad para override
+    "skipLibCheck": true, // Ignorar types de librerías
+    "outDir": "dist", // Directorio de compilación
+    "sourceMap": true // Mapas para depuración
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
