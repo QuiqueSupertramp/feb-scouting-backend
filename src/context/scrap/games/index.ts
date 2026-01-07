@@ -1,7 +1,7 @@
 import { chromium } from "playwright"
-import type { GameData, PlayerStats, TeamStats } from "./games.types.js"
+import type { ScrapGameData, ScrapPlayerStats, ScrapTeamStats } from "./types.js"
 
-export const scrapGame = async (gameFebId: string): Promise<GameData | null> => {
+export const scrapGame = async (gameFebId: string): Promise<ScrapGameData | null> => {
   const gamesURL = `https://baloncestoenvivo.feb.es/partido/${gameFebId}`
 
   const browser = await chromium.launch({ headless: true })
@@ -44,7 +44,7 @@ export const scrapGame = async (gameFebId: string): Promise<GameData | null> => 
         t.textContent.trim()
       )
 
-      const playerStats: Omit<PlayerStats, "gameFebId" | "teamFebId">[][] = Array.from(
+      const playerStats: Omit<ScrapPlayerStats, "gameFebId" | "teamFebId">[][] = Array.from(
         document.querySelectorAll<HTMLDivElement>(".responsive-scroll table tbody")
       )
         .filter(x => !!x)
@@ -105,7 +105,7 @@ export const scrapGame = async (gameFebId: string): Promise<GameData | null> => 
           return x
         })
 
-      const teamStats: Omit<TeamStats, "gameFebId" | "teamFebId">[] =
+      const teamStats: Omit<ScrapTeamStats, "gameFebId" | "teamFebId">[] =
         Array.from(document.querySelectorAll<HTMLDivElement>(".responsive-scroll table tbody"))
           .filter(x => !!x)
           .map(body => {
@@ -173,7 +173,7 @@ export const scrapGame = async (gameFebId: string): Promise<GameData | null> => 
             total: Number(localTotalScore) || 0,
             quarters: awayQuartersScores.map(q => Number(q) || 0),
           },
-          teamStats: teamStats[0] as Omit<TeamStats, "gameFebId" | "teamFebId">,
+          teamStats: teamStats[0] as Omit<ScrapTeamStats, "gameFebId" | "teamFebId">,
           playerStats: playerStats[0],
         },
         away: {
@@ -182,7 +182,7 @@ export const scrapGame = async (gameFebId: string): Promise<GameData | null> => 
             total: Number(awayTotalScore) || 0,
             quarters: awayQuartersScores.map(q => Number(q) || 0),
           },
-          teamStats: teamStats[1] as Omit<TeamStats, "gameFebId" | "teamFebId">,
+          teamStats: teamStats[1] as Omit<ScrapTeamStats, "gameFebId" | "teamFebId">,
           playerStats: playerStats[1],
         },
       }
@@ -209,7 +209,7 @@ export const scrapGame = async (gameFebId: string): Promise<GameData | null> => 
 }
 
 export const scrapGames = async (gameFebIds: string[]) => {
-  const promises: Promise<GameData | null>[] = []
+  const promises: Promise<ScrapGameData | null>[] = []
   gameFebIds.forEach(id => promises.push(scrapGame(id)))
 
   const x = await Promise.all(promises)

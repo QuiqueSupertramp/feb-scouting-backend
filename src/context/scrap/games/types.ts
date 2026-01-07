@@ -1,6 +1,6 @@
 import type { ShotStats } from "../../api/modules/stats/stats.types.js"
 
-export interface PlayerStats {
+export interface ScrapPlayerStats {
   gameFebId: string
   playerFebId: string
   teamFebId: string
@@ -22,7 +22,7 @@ export interface PlayerStats {
   pir: number
 }
 
-export interface TeamStats {
+export interface ScrapTeamStats {
   gameFebId: string
   teamFebId: string
   minutes: string
@@ -42,25 +42,25 @@ export interface TeamStats {
   pir: number
 }
 
-export interface TeamScores {
+export interface ScrapTeamScores {
   total: number
   quarters: number[]
 }
 
-export interface GameTeamData {
+export interface ScrapGameTeamData {
   teamFebId: string
-  scores: TeamScores
-  teamStats: TeamStats
-  playerStats: PlayerStats[]
+  scores: ScrapTeamScores
+  teamStats: ScrapTeamStats
+  playerStats: ScrapPlayerStats[]
 }
 
-export interface GameData {
+export interface ScrapGameData {
   gameFebId: string
-  local: GameTeamData
-  away: GameTeamData
+  local: ScrapGameTeamData
+  away: ScrapGameTeamData
 }
 
 export interface ScrapGameResponse {
   success: boolean
-  data: GameData
+  data: ScrapGameData
 }

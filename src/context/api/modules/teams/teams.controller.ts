@@ -2,6 +2,7 @@ import type { Request, Response } from "express"
 import { successResponse } from "../../../../app/responses/index.js"
 import { TeamsService } from "./teams.service.js"
 import { scrapGame } from "../../../scrap/games/index.js"
+import { scrapScores } from "../../../scrap/scores/index.js"
 
 export class TeamsController {
   teamsService = new TeamsService()
@@ -11,7 +12,7 @@ export class TeamsController {
     // const teams = await this.teamsService.getAll()
     // successResponse(res, teams)
 
-    const x = await scrapGame("2484047")
+    const x = await scrapScores("979311")
     successResponse(res, x)
   }
 }

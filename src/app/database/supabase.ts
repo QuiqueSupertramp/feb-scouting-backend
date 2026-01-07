@@ -1,10 +1,4 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export type Database = {
   // Allows to automatically instantiate createClient with right options
@@ -28,6 +22,173 @@ export type Database = {
           name?: string
         }
         Relationships: []
+      }
+      game_player_stats: {
+        Row: {
+          assists: number
+          defensive_rebounds: number
+          field_goals_attempted: number
+          field_goals_made: number
+          fouls_committed: number
+          fouls_drawn: number
+          free_throws_attempted: number
+          free_throws_made: number
+          game_feb_id: string
+          minutes: number
+          name: string
+          offensive_rebounds: number
+          pir: number
+          player_feb_id: string
+          points: number
+          steals: number
+          team_feb_id: string
+          three_points_attempted: number
+          three_points_made: number
+          turnovers: number
+          two_points_attempted: number
+          two_points_made: number
+        }
+        Insert: {
+          assists: number
+          defensive_rebounds: number
+          field_goals_attempted: number
+          field_goals_made: number
+          fouls_committed: number
+          fouls_drawn: number
+          free_throws_attempted: number
+          free_throws_made: number
+          game_feb_id: string
+          minutes: number
+          name: string
+          offensive_rebounds: number
+          pir: number
+          player_feb_id: string
+          points: number
+          steals: number
+          team_feb_id: string
+          three_points_attempted: number
+          three_points_made: number
+          turnovers: number
+          two_points_attempted: number
+          two_points_made: number
+        }
+        Update: {
+          assists?: number
+          defensive_rebounds?: number
+          field_goals_attempted?: number
+          field_goals_made?: number
+          fouls_committed?: number
+          fouls_drawn?: number
+          free_throws_attempted?: number
+          free_throws_made?: number
+          game_feb_id?: string
+          minutes?: number
+          name?: string
+          offensive_rebounds?: number
+          pir?: number
+          player_feb_id?: string
+          points?: number
+          steals?: number
+          team_feb_id?: string
+          three_points_attempted?: number
+          three_points_made?: number
+          turnovers?: number
+          two_points_attempted?: number
+          two_points_made?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_player_stats_game_feb_id_fkey"
+            columns: ["game_feb_id"]
+            isOneToOne: false
+            referencedRelation: "scores"
+            referencedColumns: ["game_feb_id"]
+          },
+          {
+            foreignKeyName: "game_player_stats_team_feb_id_fkey"
+            columns: ["team_feb_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["team_feb_id"]
+          }
+        ]
+      }
+      game_team_stats: {
+        Row: {
+          assists: number
+          defensive_rebounds: number
+          field_goals_attempted: number
+          field_goals_made: number
+          fouls_committed: number
+          fouls_drawn: number
+          free_throws_attempted: number
+          free_throws_made: number
+          game_feb_id: string
+          minutes: number
+          offensive_rebounds: number
+          pir: number
+          points: number
+          steals: number
+          team_feb_id: string
+          three_points_attempted: number
+          three_points_made: number
+          turnovers: number
+          two_points_attempted: number
+          two_points_made: number
+        }
+        Insert: {
+          assists: number
+          defensive_rebounds: number
+          field_goals_attempted: number
+          field_goals_made: number
+          fouls_committed: number
+          fouls_drawn: number
+          free_throws_attempted: number
+          free_throws_made: number
+          game_feb_id: string
+          minutes: number
+          offensive_rebounds: number
+          pir: number
+          points: number
+          steals: number
+          team_feb_id: string
+          three_points_attempted: number
+          three_points_made: number
+          turnovers: number
+          two_points_attempted: number
+          two_points_made: number
+        }
+        Update: {
+          assists?: number
+          defensive_rebounds?: number
+          field_goals_attempted?: number
+          field_goals_made?: number
+          fouls_committed?: number
+          fouls_drawn?: number
+          free_throws_attempted?: number
+          free_throws_made?: number
+          game_feb_id?: string
+          minutes?: number
+          offensive_rebounds?: number
+          pir?: number
+          points?: number
+          steals?: number
+          team_feb_id?: string
+          three_points_attempted?: number
+          three_points_made?: number
+          turnovers?: number
+          two_points_attempted?: number
+          two_points_made?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_team_stats_team_feb_id_fkey"
+            columns: ["team_feb_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["team_feb_id"]
+          }
+        ]
       }
       group: {
         Row: {
@@ -74,7 +235,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "group"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
       player_stats: {
@@ -157,35 +318,41 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "teams"
             referencedColumns: ["team_feb_id"]
-          },
+          }
         ]
       }
       scores: {
         Row: {
+          away_quarters: number[]
           away_score: number
           away_team_feb_id: string
           date: string
           game_feb_id: string
+          local_quarters: number[]
           local_score: number
           local_team_feb_id: string
           round: number
           time: string
         }
         Insert: {
+          away_quarters: number[]
           away_score: number
           away_team_feb_id: string
           date: string
           game_feb_id: string
+          local_quarters: number[]
           local_score: number
           local_team_feb_id: string
           round: number
           time: string
         }
         Update: {
+          away_quarters?: number[]
           away_score?: number
           away_team_feb_id?: string
           date?: string
           game_feb_id?: string
+          local_quarters?: number[]
           local_score?: number
           local_team_feb_id?: string
           round?: number
@@ -205,7 +372,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "teams"
             referencedColumns: ["team_feb_id"]
-          },
+          }
         ]
       }
       team_stats: {
@@ -279,7 +446,7 @@ export type Database = {
             isOneToOne: true
             referencedRelation: "teams"
             referencedColumns: ["team_feb_id"]
-          },
+          }
         ]
       }
       teams: {
@@ -308,7 +475,7 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "league"
             referencedColumns: ["id"]
-          },
+          }
         ]
       }
     }
@@ -340,7 +507,7 @@ export type Tables<
   }
     ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
         DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
+    : never = never
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -350,25 +517,21 @@ export type Tables<
     }
     ? R
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])
-    ? (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
-        Row: infer R
-      }
-      ? R
-      : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+  ? (DefaultSchema["Tables"] & DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+      Row: infer R
+    }
+    ? R
     : never
+  : never
 
 export type TablesInsert<
-  DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
+  DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never = never
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -378,22 +541,20 @@ export type TablesInsert<
     ? I
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Insert: infer I
-      }
-      ? I
-      : never
+  ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+      Insert: infer I
+    }
+    ? I
     : never
+  : never
 
 export type TablesUpdate<
-  DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
+  DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
+    : never = never
 > = DefaultSchemaTableNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
@@ -403,29 +564,27 @@ export type TablesUpdate<
     ? U
     : never
   : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Update: infer U
-      }
-      ? U
-      : never
+  ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+      Update: infer U
+    }
+    ? U
     : never
+  : never
 
 export type Enums<
-  DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema["Enums"]
-    | { schema: keyof DatabaseWithoutInternals },
+  DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"] | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
+    : never = never
 > = DefaultSchemaEnumNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
   ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
-    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
-    : never
+  ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+  : never
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
@@ -435,14 +594,14 @@ export type CompositeTypes<
     schema: keyof DatabaseWithoutInternals
   }
     ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
+    : never = never
 > = PublicCompositeTypeNameOrOptions extends {
   schema: keyof DatabaseWithoutInternals
 }
   ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
-    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
+  ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+  : never
 
 export const Constants = {
   public: {
