@@ -1,5 +1,5 @@
-import { database } from "../../../app/database/index.js"
-import { ApiError } from "../../../app/errors/apiError.js"
+import { database } from "../../../../app/database/index.js"
+import { ApiError } from "../../../../app/errors/apiError.js"
 import { mapTeamDataFromSupabase } from "./teams.mappers.js"
 
 export class TeamsService {

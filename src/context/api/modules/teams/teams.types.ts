@@ -1,4 +1,4 @@
-import type { Database } from "../../../app/database/supabase.js"
+import type { Database } from "../../../../app/database/supabase.js"
 
 export interface Team {
   febId: string

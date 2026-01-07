@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import { notFoundHandler } from "./app/middlewares/notFoundHandler.js"
 import { errorHandler } from "./app/middlewares/errorHandler.js"
-import apiRouter from "./context/modules/router.js"
+import apiRouter from "./context/api/modules/router.js"
 
 const app = express()
 
