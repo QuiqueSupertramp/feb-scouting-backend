@@ -32,12 +32,15 @@ export class TeamsService {
       .single()
     if (error || !data) throw new ApiError(status, statusText, error.code)
 
+    const avg = getAverageGameTeamStats(data.game_team_stats.map(mapGameTeamStatsFromSupabase))
+
     return {
       teamFebId: data.team_feb_id,
       name: data.name,
       pretty_name: data.pretty_name,
       league_id: data.league_id,
-      stats: getAverageGameTeamStats(data.game_team_stats.map(mapGameTeamStatsFromSupabase)),
+      games: avg.games,
+      stats: avg.stats,
     }
   }
 }
