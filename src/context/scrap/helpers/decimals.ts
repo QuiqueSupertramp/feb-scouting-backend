@@ -1,7 +1,7 @@
 export const round2Decimals = (valor: number): number => {
-  return Number(valor.toFixed(1))
+  return Math.round((valor + Number.EPSILON) * 100) / 100
 }
 
 export const round2DecimalsPercentage = (valor: number): number => {
-  return Number((valor * 100).toFixed(2))
+  return Math.round((valor * 100 + Number.EPSILON) * 100) / 100
 }

@@ -1,7 +1,8 @@
 import { database } from "../../../../app/database/index.js"
 import { ApiError } from "../../../../app/errors/apiError.js"
-import { mapScoreToSupabase } from "./scores.mappers.js"
-import type { Score, ScoreSupabase } from "./scores.types.js"
+import { getAverageScore } from "./helpers/getAverageScore.js"
+import { mapScoreFromSupabase, mapScoreToSupabase } from "./scores.mappers.js"
+import type { Score } from "./scores.types.js"
 
 export class ScoresService {
   constructor() {}
@@ -9,12 +10,25 @@ export class ScoresService {
   getAllIds = async () => {
     const { data, error, status, statusText } = await database.from("scores").select("game_feb_id")
     if (error || !data) throw new ApiError(status, statusText, error.code)
-    const scoresIds = data.map(score => score.game_feb_id)
-    return scoresIds
+    return data.map(score => score.game_feb_id)
   }
 
   save = async (scores: Score[]) => {
     const { error } = await database.from("scores").upsert(scores.map(mapScoreToSupabase))
     return !error
+  }
+
+  getAverageByTeamId = async (teamFebId: string) => {
+    const { data, error, status, statusText } = await database
+      .from("scores")
+      .select("*")
+      .or(`local_team_feb_id.eq.${teamFebId}, away_team_feb_id.eq.${teamFebId}`)
+      .order("round", { ascending: false })
+
+    if (error || !data) throw new ApiError(status, statusText, error.code)
+
+    const scoresMapped = data.map(mapScoreFromSupabase)
+
+    return getAverageScore(scoresMapped, teamFebId)
   }
 }

@@ -14,3 +14,9 @@ export interface Score {
 }
 
 export type ScoreSupabase = Database["public"]["Tables"]["scores"]["Row"]
+
+export interface TeamScoreAverage {
+  teamFebId: string
+  avgPoints: number
+  avgQuarters: number[]
+}
