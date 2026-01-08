@@ -24,3 +24,11 @@ export interface GamePlayerStats {
 }
 
 export type GamePlayerStatsSupabase = Database["public"]["Tables"]["game_player_stats"]["Row"]
+
+export interface PlayerStatsSummary {
+  teamFebId: string
+  playerFebId: string
+  name: string
+  games: string[]
+  stats: Omit<GamePlayerStats, "teamFebId" | "playerFebId" | "name" | "gameFebId">
+}

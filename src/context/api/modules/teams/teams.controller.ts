@@ -7,7 +7,7 @@ export class TeamsController {
   constructor() {}
 
   getAll = async (req: Request, res: Response) => {
-    const teams = await this.teamsService.getAll()
+    const teams = await this.teamsService.getById("979311")
     successResponse(res, teams)
   }
 }
