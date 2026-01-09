@@ -16,12 +16,23 @@ export class ScoresService {
     return !error
   }
 
-  getAverageByTeamId = async (teamFebId: string) => {
+  getByTeamId = async (teamFebId: string) => {
     const { data, error, status, statusText } = await database
       .from("scores")
       .select("*")
       .or(`local_team_feb_id.eq.${teamFebId}, away_team_feb_id.eq.${teamFebId}`)
       .order("round", { ascending: false })
+
+    if (error || !data) throw new ApiError(status, statusText, error.code)
+
+    return data.map(mapScoreFromSupabase)
+  }
+
+  getAverageByTeamId = async (teamFebId: string) => {
+    const { data, error, status, statusText } = await database
+      .from("scores")
+      .select("*")
+      .or(`local_team_feb_id.eq.${teamFebId}, away_team_feb_id.eq.${teamFebId}`)
 
     if (error || !data) throw new ApiError(status, statusText, error.code)
 
