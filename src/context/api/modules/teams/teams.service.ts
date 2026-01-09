@@ -5,8 +5,6 @@ import { mapGameTeamStatsFromSupabase } from "../stats/gameTeamStats/mappers.js"
 import { mapTeamDataFromSupabase } from "./teams.mappers.js"
 
 export class TeamsService {
-  constructor() {}
-
   getAll = async () => {
     const { data, error, status, statusText } = await database.from("teams").select("*").order("team_feb_id")
     if (error || !data) throw new ApiError(status, statusText, error.code)
@@ -22,12 +20,7 @@ export class TeamsService {
   getById = async (teamFebId: string) => {
     const { data, error, status, statusText } = await database
       .from("teams")
-      .select(
-        `
-    *,
-    game_team_stats (*)
-  `
-      )
+      .select(`*,game_team_stats (*)`)
       .eq("team_feb_id", teamFebId)
       .single()
     if (error || !data) throw new ApiError(status, statusText, error.code)

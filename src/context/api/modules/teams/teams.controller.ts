@@ -4,9 +4,8 @@ import type { Request, Response } from "express"
 
 export class TeamsController {
   private teamsService = new TeamsService()
-  constructor() {}
 
-  getAll = async (req: Request, res: Response) => {
+  getAll = async (_req: Request, res: Response) => {
     const teams = await this.teamsService.getAll()
     successResponse(res, teams)
   }

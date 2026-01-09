@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <any> */
 import { getTeamStatsPerGame } from "./getTeamStatsPerGame.js"
 import type { ShotStats } from "../../stats.types.js"
 import type { GameTeamStats, TeamStatsSummary } from "../types.js"

@@ -5,8 +5,6 @@ import { mapScoreFromSupabase, mapScoreToSupabase } from "./scores.mappers.js"
 import type { Score } from "./scores.types.js"
 
 export class ScoresService {
-  constructor() {}
-
   getAllIds = async () => {
     const { data, error, status, statusText } = await database.from("scores").select("game_feb_id")
     if (error || !data) throw new ApiError(status, statusText, error.code)
