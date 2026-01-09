@@ -7,7 +7,7 @@ export const getAverageGamePlayerStats = (items: GamePlayerStats[]): PlayerStats
   const teamFebId = items[0]?.teamFebId ?? ""
   const playerFebId = items[0]?.playerFebId ?? ""
   const name = items[0]?.name ?? ""
-  const games = items.map(i => i.gameFebId)
+  const games = items.map((i) => i.gameFebId)
 
   const stats = {} as Omit<GamePlayerStats, "teamFebId" | "playerFebId" | "name" | "gameFebId">
   const base = items[0] as Omit<GamePlayerStats, "teamFebId" | "playerFebId" | "name" | "gameFebId">

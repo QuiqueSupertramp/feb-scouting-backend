@@ -5,7 +5,7 @@ import type { GameTeamStats, TeamStatsSummary } from "../types.js"
 
 export const getAverageGameTeamStats = (items: GameTeamStats[]): TeamStatsSummary => {
   const teamFebId = items[0]?.teamFebId ?? ""
-  const games = items.map(i => i.gameFebId)
+  const games = items.map((i) => i.gameFebId)
 
   const stats = {} as Omit<GameTeamStats, "gameFebId" | "teamFebId">
   const base = items[0] as Omit<GameTeamStats, "gameFebId" | "teamFebId">

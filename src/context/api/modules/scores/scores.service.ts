@@ -8,7 +8,7 @@ export class ScoresService {
   getAllIds = async () => {
     const { data, error, status, statusText } = await database.from("scores").select("game_feb_id")
     if (error || !data) throw new ApiError(status, statusText, error.code)
-    return data.map(score => score.game_feb_id)
+    return data.map((score) => score.game_feb_id)
   }
 
   save = async (scores: Score[]) => {

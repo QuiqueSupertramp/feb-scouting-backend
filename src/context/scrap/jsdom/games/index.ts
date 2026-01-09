@@ -19,13 +19,13 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
 
   const marcadorLocalNombreLink = marcadorLocalDiv.querySelector<HTMLAnchorElement>(".nombre a")
   const localTeamFebId = marcadorLocalNombreLink
-    ? new URL(marcadorLocalNombreLink.href).searchParams.get("i") ?? ""
+    ? (new URL(marcadorLocalNombreLink.href).searchParams.get("i") ?? "")
     : ""
   const localTotalScore = marcadorLocalDiv.querySelector<HTMLSpanElement>(".resultado")?.textContent.trim()
 
   const marcadorVisitanteNombreLink = marcadorVisitanteDiv.querySelector<HTMLAnchorElement>(".nombre a")
   const awayTeamFebId = marcadorVisitanteNombreLink
-    ? new URL(marcadorVisitanteNombreLink?.href ?? "").searchParams.get("i") ?? ""
+    ? (new URL(marcadorVisitanteNombreLink?.href ?? "").searchParams.get("i") ?? "")
     : ""
   const awayTotalScore = marcadorVisitanteDiv.querySelector<HTMLSpanElement>(".resultado")?.textContent.trim()
 
@@ -33,41 +33,43 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
   const marcadorParcialesVisitante = document.querySelector<HTMLDivElement>(".box-marcador .parciales .visitante")
   if (!marcadorParcialesLocal || !marcadorParcialesVisitante)
     throw new ApiError(400, `Impossible to scrap the game with id ${gameFebId}`)
-  const localQuartersScores = Array.from(marcadorParcialesLocal.querySelectorAll("span")).map(t => t.textContent.trim())
-  const awayQuartersScores = Array.from(marcadorParcialesVisitante.querySelectorAll("span")).map(t =>
-    t.textContent.trim()
+  const localQuartersScores = Array.from(marcadorParcialesLocal.querySelectorAll("span")).map((t) =>
+    t.textContent.trim(),
+  )
+  const awayQuartersScores = Array.from(marcadorParcialesVisitante.querySelectorAll("span")).map((t) =>
+    t.textContent.trim(),
   )
 
   const playerStats: Omit<GamePlayerStats, "gameFebId" | "teamFebId">[][] = Array.from(
-    document.querySelectorAll<HTMLDivElement>(".responsive-scroll table tbody")
+    document.querySelectorAll<HTMLDivElement>(".responsive-scroll table tbody"),
   )
     .filter(removeEmptyItems)
-    .map(body => {
+    .map((body) => {
       const x = Array.from(body.querySelectorAll("tr"))
         .slice(2)
-        .filter(r => !r.classList.contains("row-total"))
+        .filter((r) => !r.classList.contains("row-total"))
         .filter(removeEmptyItems)
-        .map(row => {
+        .map((row) => {
           const cols = Array.from(row.querySelectorAll("td"))
           const link = cols[2]?.querySelector("a")
           const href = link?.getAttribute("href") ?? ""
           const name = link?.textContent?.trim() ?? ""
-          const playerFebId = href ? new URL(href).searchParams.get("c") ?? "" : ""
+          const playerFebId = href ? (new URL(href).searchParams.get("c") ?? "") : ""
 
           const [twoPointsMade = 0, twoPointsAttemted = 0] = ((cols[5]?.textContent.trim() || "").split(" ")[0] || "")
             .split("/")
-            .map(n => Number(n) || 0)
+            .map((n) => Number(n) || 0)
           const [threePointsMade = 0, threePointsAttemted = 0] = (
             (cols[6]?.textContent.trim() || "").split(" ")[0] || ""
           )
             .split("/")
-            .map(n => Number(n) || 0)
+            .map((n) => Number(n) || 0)
           const [fieldGoalsMade = 0, fieldGoalsAttemted = 0] = ((cols[7]?.textContent.trim() || "").split(" ")[0] || "")
             .split("/")
-            .map(n => Number(n) || 0)
+            .map((n) => Number(n) || 0)
           const [freeThrowsMade = 0, freeThrowsAttemted = 0] = ((cols[8]?.textContent.trim() || "").split(" ")[0] || "")
             .split("/")
-            .map(n => Number(n) || 0)
+            .map((n) => Number(n) || 0)
 
           const [m = 0, s = 0] = (cols[3]?.textContent.trim() || "00:00").split(":")
           const minutes = Number(m) || 0
@@ -84,9 +86,18 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
             minutes: minutesMilliseconds,
             points: Number(cols[4]?.textContent ?? 0),
             twoPoints: { made: twoPointsMade, attempted: twoPointsAttemted },
-            threePoints: { made: threePointsMade, attempted: threePointsAttemted },
-            fieldGoals: { made: fieldGoalsMade, attempted: fieldGoalsAttemted },
-            freeThrows: { made: freeThrowsMade, attempted: freeThrowsAttemted },
+            threePoints: {
+              made: threePointsMade,
+              attempted: threePointsAttemted,
+            },
+            fieldGoals: {
+              made: fieldGoalsMade,
+              attempted: fieldGoalsAttemted,
+            },
+            freeThrows: {
+              made: freeThrowsMade,
+              attempted: freeThrowsAttemted,
+            },
             offensiveRebounds: Number(cols[9]?.textContent ?? 0),
             defensiveRebounds: Number(cols[10]?.textContent ?? 0),
             totalRebounds: Number(cols[11]?.textContent ?? 0),
@@ -105,34 +116,34 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
   const teamStats =
     Array.from(document.querySelectorAll<HTMLDivElement>(".responsive-scroll table tbody"))
       .filter(removeEmptyItems)
-      .map(body => {
+      .map((body) => {
         return Array.from(body.querySelectorAll("tr"))
           .filter(removeEmptyItems)
-          .filter(r => r.classList.contains("row-total"))
-          .map(row => {
+          .filter((r) => r.classList.contains("row-total"))
+          .map((row) => {
             const cols = Array.from(row.querySelectorAll("td"))
 
             const [twoPointsMade = 0, twoPointsAttemted = 0] = ((cols[5]?.textContent.trim() || "").split(" ")[0] || "")
               .split("/")
-              .map(n => Number(n) || 0)
+              .map((n) => Number(n) || 0)
 
             const [threePointsMade = 0, threePointsAttemted = 0] = (
               (cols[6]?.textContent.trim() || "").split(" ")[0] || ""
             )
               .split("/")
-              .map(n => Number(n) || 0)
+              .map((n) => Number(n) || 0)
 
             const [fieldGoalsMade = 0, fieldGoalsAttemted = 0] = (
               (cols[7]?.textContent.trim() || "").split(" ")[0] || ""
             )
               .split("/")
-              .map(n => Number(n) || 0)
+              .map((n) => Number(n) || 0)
 
             const [freeThrowsMade = 0, freeThrowsAttemted = 0] = (
               (cols[8]?.textContent.trim() || "").split(" ")[0] || ""
             )
               .split("/")
-              .map(n => Number(n) || 0)
+              .map((n) => Number(n) || 0)
 
             const [m = 0, s = 0] = (cols[3]?.textContent.trim() || "00:00").split(":")
             const minutes = Number(m) || 0
@@ -147,9 +158,18 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
               minutes: minutesMilliseconds,
               points: Number(cols[4]?.textContent ?? 0),
               twoPoints: { made: twoPointsMade, attempted: twoPointsAttemted },
-              threePoints: { made: threePointsMade, attempted: threePointsAttemted },
-              fieldGoals: { made: fieldGoalsMade, attempted: fieldGoalsAttemted },
-              freeThrows: { made: freeThrowsMade, attempted: freeThrowsAttemted },
+              threePoints: {
+                made: threePointsMade,
+                attempted: threePointsAttemted,
+              },
+              fieldGoals: {
+                made: fieldGoalsMade,
+                attempted: fieldGoalsAttemted,
+              },
+              freeThrows: {
+                made: freeThrowsMade,
+                attempted: freeThrowsAttemted,
+              },
               offensiveRebounds: Number(cols[9]?.textContent ?? 0),
               defensiveRebounds: Number(cols[10]?.textContent ?? 0),
               totalRebounds: Number(cols[11]?.textContent ?? 0),
@@ -170,25 +190,43 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
       teamFebId: localTeamFebId,
       scores: {
         total: Number(localTotalScore) || 0,
-        quarters: localQuartersScores.map(q => Number(q) || 0),
+        quarters: localQuartersScores.map((q) => Number(q) || 0),
       },
-      teamStats: { gameFebId, teamFebId: localTeamFebId, ...teamStats[0] } as GameTeamStats,
-      playerStats: playerStats[0]?.map(p => ({ gameFebId, teamFebId: localTeamFebId, ...p })) ?? [],
+      teamStats: {
+        gameFebId,
+        teamFebId: localTeamFebId,
+        ...teamStats[0],
+      } as GameTeamStats,
+      playerStats:
+        playerStats[0]?.map((p) => ({
+          gameFebId,
+          teamFebId: localTeamFebId,
+          ...p,
+        })) ?? [],
     },
     away: {
       teamFebId: awayTeamFebId,
       scores: {
         total: Number(awayTotalScore) || 0,
-        quarters: awayQuartersScores.map(q => Number(q) || 0),
+        quarters: awayQuartersScores.map((q) => Number(q) || 0),
       },
-      teamStats: { gameFebId, teamFebId: awayTeamFebId, ...teamStats[1] } as GameTeamStats,
-      playerStats: playerStats[1]?.map(p => ({ gameFebId, teamFebId: awayTeamFebId, ...p })) ?? [],
+      teamStats: {
+        gameFebId,
+        teamFebId: awayTeamFebId,
+        ...teamStats[1],
+      } as GameTeamStats,
+      playerStats:
+        playerStats[1]?.map((p) => ({
+          gameFebId,
+          teamFebId: awayTeamFebId,
+          ...p,
+        })) ?? [],
     },
   }
 }
 
 export const scrapGames = async (gameFebIds: string[]) => {
   const promises: Promise<ScrapGameData>[] = []
-  gameFebIds.filter(removeEmptyItems).forEach(id => promises.push(scrapGame(id)))
+  gameFebIds.filter(removeEmptyItems).forEach((id) => promises.push(scrapGame(id)))
   return await Promise.all(promises)
 }

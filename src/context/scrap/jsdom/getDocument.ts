@@ -11,8 +11,8 @@ export const getDocument = async (url: string) => {
       pretendToBeVisual: false,
     })
 
-    dom.window.document.querySelectorAll('link[rel="stylesheet"]').forEach(l => l.remove())
-    dom.window.document.querySelectorAll("style").forEach(s => s.remove())
+    dom.window.document.querySelectorAll('link[rel="stylesheet"]').forEach((l) => l.remove())
+    dom.window.document.querySelectorAll("style").forEach((s) => s.remove())
 
     return dom.window.document
   } catch {

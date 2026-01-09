@@ -21,7 +21,7 @@ export const cronGames = async () => {
 
   // Scrapear todos los scores y eliminar duplicados
   const scoresPromises: Promise<ScrapScore[]>[] = []
-  teamsIds.forEach(id => scoresPromises.push(scrapScores(id)))
+  teamsIds.forEach((id) => scoresPromises.push(scrapScores(id)))
   const scores = (await Promise.all(scoresPromises)).flat()
   const cleanedScores = removeDuplicateScores(scores)
 
@@ -30,14 +30,14 @@ export const cronGames = async () => {
 
   // Eliminar duplicados entre scores de supabase y los scrapeados
   const scoresFiltered = filterExistingScores(cleanedScores, existingScoresIds)
-  const scoresFilteredIds = scoresFiltered.map(s => s.gameFebId)
+  const scoresFilteredIds = scoresFiltered.map((s) => s.gameFebId)
 
   // Scrapear los games de los scores filtrados
   const games = await scrapGames(scoresFilteredIds)
 
   // Guardar los nuevos
-  const gamesMapped = games.filter(removeEmptyItems).map(g => {
-    const scrapedScore = scoresFiltered.find(s => s.gameFebId === g.gameFebId) as ScrapScore
+  const gamesMapped = games.filter(removeEmptyItems).map((g) => {
+    const scrapedScore = scoresFiltered.find((s) => s.gameFebId === g.gameFebId) as ScrapScore
 
     const score: Score = {
       ...scrapedScore,
@@ -59,10 +59,10 @@ export const cronGames = async () => {
   const teamStatsToSave: GameTeamStats[] = []
   const playerStatsToSave: GamePlayerStats[] = []
 
-  gamesMapped.forEach(g => {
+  gamesMapped.forEach((g) => {
     scoresToSave.push(g.score)
-    g.teamStats.forEach(s => teamStatsToSave.push(s))
-    g.playerStats.forEach(s => playerStatsToSave.push(s))
+    g.teamStats.forEach((s) => teamStatsToSave.push(s))
+    g.playerStats.forEach((s) => playerStatsToSave.push(s))
   })
 
   return await Promise.all([

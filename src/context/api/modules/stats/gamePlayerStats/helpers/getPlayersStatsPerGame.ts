@@ -5,7 +5,7 @@ import type { GamePlayerStats } from "../types.js"
 
 export const getPlayerStatsPerGame = (
   stats: Omit<GamePlayerStats, "teamFebId" | "playerFebId" | "name" | "gameFebId">,
-  games: number
+  games: number,
 ) => {
   const statsEntries = Object.entries(stats)
 

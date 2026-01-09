@@ -19,13 +19,16 @@ export class GamePlayerStatsService {
 
     const playersStatsMapped = data.map(mapGamePlayerStatsFromSupabase)
 
-    const playersStatsGrouped = playersStatsMapped.reduce((acc, stat) => {
-      if (!acc[stat.playerFebId]) {
-        acc[stat.playerFebId] = []
-      }
-      acc[stat.playerFebId]?.push(stat)
-      return acc
-    }, {} as Record<string, GamePlayerStats[]>)
+    const playersStatsGrouped = playersStatsMapped.reduce(
+      (acc, stat) => {
+        if (!acc[stat.playerFebId]) {
+          acc[stat.playerFebId] = []
+        }
+        acc[stat.playerFebId]?.push(stat)
+        return acc
+      },
+      {} as Record<string, GamePlayerStats[]>,
+    )
 
     return Object.values(playersStatsGrouped).map(getAverageGamePlayerStats)
   }

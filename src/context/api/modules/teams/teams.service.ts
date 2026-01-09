@@ -14,7 +14,7 @@ export class TeamsService {
   getAllIds = async () => {
     const { data, error, status, statusText } = await database.from("teams").select("team_feb_id")
     if (error || !data) throw new ApiError(status, statusText, error.code)
-    return data.map(team => team.team_feb_id)
+    return data.map((team) => team.team_feb_id)
   }
 
   getById = async (teamFebId: string) => {

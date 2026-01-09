@@ -12,5 +12,5 @@ export const scrapScores = async (teamId: string) => {
   const rows = Array.from(scoresDocument.querySelectorAll("table tbody tr"))
   rows.shift()
 
-  return rows.map(r => getScoreData(r))
+  return rows.map((r) => getScoreData(r))
 }
