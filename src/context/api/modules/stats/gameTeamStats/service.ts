@@ -5,8 +5,6 @@ import { mapGameTeamStatsFromSupabase, mapGameTeamStatsToSupabase } from "./mapp
 import type { GameTeamStats } from "./types.js"
 
 export class GameTeamStatsService {
-  constructor() {}
-
   save = async (teamStats: GameTeamStats[]) => {
     const { error } = await database.from("game_team_stats").upsert(teamStats.map(mapGameTeamStatsToSupabase))
     return !error

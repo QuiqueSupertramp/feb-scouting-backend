@@ -22,8 +22,11 @@ export class TeamsService {
       .from("teams")
       .select(`*,game_team_stats (*)`)
       .eq("team_feb_id", teamFebId)
-      .single()
-    if (error || !data) throw new ApiError(status, statusText, error.code)
+      .limit(1)
+      .maybeSingle()
+
+    if (error) throw new ApiError(status, statusText, error.code)
+    if (!data) return null
 
     const avg = getAverageGameTeamStats(data.game_team_stats.map(mapGameTeamStatsFromSupabase))
 

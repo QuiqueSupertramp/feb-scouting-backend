@@ -37,7 +37,6 @@ export class ScoresService {
     if (error || !data) throw new ApiError(status, statusText, error.code)
 
     const scoresMapped = data.map(mapScoreFromSupabase)
-
     return getAverageScore(scoresMapped, teamFebId)
   }
 }
