@@ -1,4 +1,10 @@
-export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[]
 
 export type Database = {
   // Allows to automatically instantiate createClient with right options
@@ -238,89 +244,6 @@ export type Database = {
           },
         ]
       }
-      player_stats: {
-        Row: {
-          assists: number
-          defensive_rebounds: number
-          field_goals_attempted: number
-          field_goals_made: number
-          fouls_committed: number
-          fouls_drawn: number
-          free_throws_attempted: number
-          free_throws_made: number
-          games: number
-          minutes: number
-          name: string
-          offensive_rebounds: number
-          pir: number
-          player_feb_id: string
-          points: number
-          steals: number
-          team_feb_id: string
-          three_points_attempted: number
-          three_points_made: number
-          turnovers: number
-          two_points_attempted: number
-          two_points_made: number
-        }
-        Insert: {
-          assists: number
-          defensive_rebounds: number
-          field_goals_attempted: number
-          field_goals_made: number
-          fouls_committed: number
-          fouls_drawn: number
-          free_throws_attempted: number
-          free_throws_made: number
-          games: number
-          minutes: number
-          name: string
-          offensive_rebounds: number
-          pir: number
-          player_feb_id: string
-          points: number
-          steals: number
-          team_feb_id: string
-          three_points_attempted: number
-          three_points_made: number
-          turnovers: number
-          two_points_attempted: number
-          two_points_made: number
-        }
-        Update: {
-          assists?: number
-          defensive_rebounds?: number
-          field_goals_attempted?: number
-          field_goals_made?: number
-          fouls_committed?: number
-          fouls_drawn?: number
-          free_throws_attempted?: number
-          free_throws_made?: number
-          games?: number
-          minutes?: number
-          name?: string
-          offensive_rebounds?: number
-          pir?: number
-          player_feb_id?: string
-          points?: number
-          steals?: number
-          team_feb_id?: string
-          three_points_attempted?: number
-          three_points_made?: number
-          turnovers?: number
-          two_points_attempted?: number
-          two_points_made?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "player_stats_team_feb_id_fkey"
-            columns: ["team_feb_id"]
-            isOneToOne: false
-            referencedRelation: "teams"
-            referencedColumns: ["team_feb_id"]
-          },
-        ]
-      }
       scores: {
         Row: {
           away_quarters: number[]
@@ -370,80 +293,6 @@ export type Database = {
             foreignKeyName: "scores_local_team_feb_id_fkey"
             columns: ["local_team_feb_id"]
             isOneToOne: false
-            referencedRelation: "teams"
-            referencedColumns: ["team_feb_id"]
-          },
-        ]
-      }
-      team_stats: {
-        Row: {
-          assists: number
-          defensive_rebounds: number
-          field_goals_attempted: number
-          field_goals_made: number
-          fouls_committed: number
-          fouls_drawn: number
-          free_throws_attempted: number
-          free_throws_made: number
-          games: number
-          offensive_rebounds: number
-          pir: number
-          points: number
-          steals: number
-          team_feb_id: string
-          three_points_attempted: number
-          three_points_made: number
-          turnovers: number
-          two_points_attempted: number
-          two_points_made: number
-        }
-        Insert: {
-          assists: number
-          defensive_rebounds: number
-          field_goals_attempted: number
-          field_goals_made: number
-          fouls_committed: number
-          fouls_drawn: number
-          free_throws_attempted: number
-          free_throws_made: number
-          games: number
-          offensive_rebounds: number
-          pir: number
-          points: number
-          steals: number
-          team_feb_id: string
-          three_points_attempted: number
-          three_points_made: number
-          turnovers: number
-          two_points_attempted: number
-          two_points_made: number
-        }
-        Update: {
-          assists?: number
-          defensive_rebounds?: number
-          field_goals_attempted?: number
-          field_goals_made?: number
-          fouls_committed?: number
-          fouls_drawn?: number
-          free_throws_attempted?: number
-          free_throws_made?: number
-          games?: number
-          offensive_rebounds?: number
-          pir?: number
-          points?: number
-          steals?: number
-          team_feb_id?: string
-          three_points_attempted?: number
-          three_points_made?: number
-          turnovers?: number
-          two_points_attempted?: number
-          two_points_made?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "team_stats_team_feb_id_fkey"
-            columns: ["team_feb_id"]
-            isOneToOne: true
             referencedRelation: "teams"
             referencedColumns: ["team_feb_id"]
           },
@@ -517,8 +366,10 @@ export type Tables<
     }
     ? R
     : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    ? (DefaultSchema["Tables"] & DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
         Row: infer R
       }
       ? R
@@ -526,7 +377,9 @@ export type Tables<
     : never
 
 export type TablesInsert<
-  DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
@@ -549,7 +402,9 @@ export type TablesInsert<
     : never
 
 export type TablesUpdate<
-  DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"] | { schema: keyof DatabaseWithoutInternals },
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
   TableName extends DefaultSchemaTableNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }
@@ -572,7 +427,9 @@ export type TablesUpdate<
     : never
 
 export type Enums<
-  DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"] | { schema: keyof DatabaseWithoutInternals },
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
   EnumName extends DefaultSchemaEnumNameOrOptions extends {
     schema: keyof DatabaseWithoutInternals
   }

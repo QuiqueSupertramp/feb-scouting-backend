@@ -65,7 +65,7 @@ export const cronGames = async () => {
     g.playerStats.forEach((s) => playerStatsToSave.push(s))
   })
 
-  return await Promise.all([
+  return await Promise.allSettled([
     scoresService.save(scoresToSave),
     gameTeamStatsService.save(teamStatsToSave),
     gamePlayerStatsService.save(playerStatsToSave),

@@ -10,4 +10,9 @@ export class GameTeamStatsController {
     const team = await this.gameTeamStatsService.getByTeamId(teamFebId)
     successResponse(res, team)
   }
+
+  getAll = async (_req: Request, res: Response) => {
+    const stats = await this.gameTeamStatsService.getLeagueStats()
+    successResponse(res, stats)
+  }
 }
