@@ -1,5 +1,6 @@
 import { database } from "../../../../app/database/index.js"
 import { ApiError } from "../../../../app/errors/apiError.js"
+import { getClassification } from "./helpers/classification.js"
 import { getAverageScore } from "./helpers/getAverageScore.js"
 import { mapScoreFromSupabase, mapScoreToSupabase } from "./scores.mappers.js"
 import type { Score } from "./scores.types.js"
@@ -38,5 +39,11 @@ export class ScoresService {
 
     const scoresMapped = data.map(mapScoreFromSupabase)
     return getAverageScore(scoresMapped, teamFebId)
+  }
+
+  getClassification = async () => {
+    const { data, error, status, statusText } = await database.from("scores").select("*")
+    if (error || !data) throw new ApiError(status, statusText, error.code)
+    return getClassification(data.map(mapScoreFromSupabase))
   }
 }
