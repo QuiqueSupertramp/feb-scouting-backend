@@ -9,6 +9,7 @@ import type { Score } from "../../api/modules/scores/scores.types.js"
 import type { ScrapScore } from "../../scrap/jsdom/score/types.js"
 import type { GameTeamStats } from "../../api/modules/stats/gameTeamStats/types.js"
 import type { GamePlayerStats } from "../../api/modules/stats/gamePlayerStats/types.js"
+import { apiCache } from "../../../app/cache/lru.js"
 
 const teamsService = new TeamsService()
 const scoresService = new ScoresService()
@@ -65,9 +66,14 @@ export const cronGames = async () => {
     g.playerStats.forEach((s) => playerStatsToSave.push(s))
   })
 
-  return await Promise.allSettled([
+  const res = await Promise.allSettled([
     scoresService.save(scoresToSave),
     gameTeamStatsService.save(teamStatsToSave),
     gamePlayerStatsService.save(playerStatsToSave),
   ])
+
+  apiCache.clear()
+  console.log("Cache clared")
+
+  return res
 }

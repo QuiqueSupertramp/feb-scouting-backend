@@ -1,6 +1,6 @@
 // src/middlewares/cache.middleware.ts
 import type { Request, Response, NextFunction } from "express"
-import { lru } from "../cache/lru.js"
+import { apiCache } from "../cache/lru.js"
 
 type CacheOptions = {
   ttl?: number
@@ -12,7 +12,7 @@ export const cacheMiddleware =
   (req: Request, res: Response, next: NextFunction) => {
     const cacheKey = key ? key(req) : `${req.method}:${req.originalUrl}`
 
-    const cached = lru.get(cacheKey)
+    const cached = apiCache.get(cacheKey)
     if (cached) {
       return res.json(cached)
     }
@@ -20,7 +20,7 @@ export const cacheMiddleware =
     const originalJson = res.json.bind(res)
 
     res.json = (body) => {
-      lru.set(cacheKey, body, { ttl })
+      apiCache.set(cacheKey, body, { ttl })
       return originalJson(body)
     }
 
