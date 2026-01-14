@@ -96,18 +96,21 @@ export const getClassifications = (scores: Score[]): Classifications => {
       .map((t) => ({ teamFebId: t.teamFebId, ...t.total }))
       .sort((a, b) => {
         if (b.wins !== a.wins) return b.wins - a.wins
+        if (b.losses !== a.losses) return a.losses - b.losses
         return b.points - b.pointsAgainst - (a.points - a.pointsAgainst)
       }),
     local: teamsTable
       .map((t) => ({ teamFebId: t.teamFebId, ...t.local }))
       .sort((a, b) => {
         if (b.wins !== a.wins) return b.wins - a.wins
+        if (b.losses !== a.losses) return a.losses - b.losses
         return b.points - b.pointsAgainst - (a.points - a.pointsAgainst)
       }),
     away: teamsTable
       .map((t) => ({ teamFebId: t.teamFebId, ...t.away }))
       .sort((a, b) => {
         if (b.wins !== a.wins) return b.wins - a.wins
+        if (b.losses !== a.losses) return a.losses - b.losses
         return b.points - b.pointsAgainst - (a.points - a.pointsAgainst)
       }),
   }
