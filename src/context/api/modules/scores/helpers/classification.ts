@@ -14,10 +14,14 @@ interface Standings {
   local: StandingRow
   away: StandingRow
 }
+
+interface Classification extends StandingRow {
+  teamFebId: string
+}
 interface Classifications {
-  total: Standings[]
-  local: Standings[]
-  away: Standings[]
+  total: Classification[]
+  local: Classification[]
+  away: Classification[]
 }
 
 export const getClassifications = (scores: Score[]): Classifications => {
@@ -84,21 +88,27 @@ export const getClassifications = (scores: Score[]): Classifications => {
       losses: team.local.losses + team.away.losses,
       points: team.local.points + team.away.points,
       pointsAgainst: team.local.pointsAgainst + team.away.pointsAgainst,
-    },
+    } as StandingRow,
   }))
 
   return {
-    total: teamsTable.sort((a, b) => {
-      if (b.total.wins !== a.total.wins) return b.total.wins - a.total.wins
-      return b.total.points - b.total.pointsAgainst - (a.total.points - a.total.pointsAgainst)
-    }),
-    local: teamsTable.sort((a, b) => {
-      if (b.local.wins !== a.local.wins) return b.local.wins - a.local.wins
-      return b.local.points - b.local.pointsAgainst - (a.local.points - a.local.pointsAgainst)
-    }),
-    away: teamsTable.sort((a, b) => {
-      if (b.away.wins !== a.away.wins) return b.away.wins - a.away.wins
-      return b.away.points - b.away.pointsAgainst - (a.away.points - a.away.pointsAgainst)
-    }),
+    total: teamsTable
+      .map((t) => ({ teamFebId: t.teamFebId, ...t.total }))
+      .sort((a, b) => {
+        if (b.wins !== a.wins) return b.wins - a.wins
+        return b.points - b.pointsAgainst - (a.points - a.pointsAgainst)
+      }),
+    local: teamsTable
+      .map((t) => ({ teamFebId: t.teamFebId, ...t.local }))
+      .sort((a, b) => {
+        if (b.wins !== a.wins) return b.wins - a.wins
+        return b.points - b.pointsAgainst - (a.points - a.pointsAgainst)
+      }),
+    away: teamsTable
+      .map((t) => ({ teamFebId: t.teamFebId, ...t.away }))
+      .sort((a, b) => {
+        if (b.wins !== a.wins) return b.wins - a.wins
+        return b.points - b.pointsAgainst - (a.points - a.pointsAgainst)
+      }),
   }
 }

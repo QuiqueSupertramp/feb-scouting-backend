@@ -12,7 +12,7 @@ export class ScoresController {
   }
 
   getClassification = async (req: Request, res: Response) => {
-    const scores = await this.teamsService.getClassification()
-    successResponse(res, scores)
+    const classifications = await this.teamsService.getClassification()
+    successResponse(res, classifications)
   }
 }
