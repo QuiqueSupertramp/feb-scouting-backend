@@ -1,7 +1,6 @@
 import { database } from "../../../../../app/database/index.js"
 import { ApiError } from "../../../../../app/errors/apiError.js"
 import { getAverageGameTeamStats } from "./helpers/getAverageGameTeamStats.js"
-import { getTeamStatsPerGame } from "./helpers/getTeamStatsPerGame.js"
 import { mapGameTeamStatsFromSupabase, mapGameTeamStatsToSupabase } from "./mappers.js"
 import type { GameTeamStats } from "./types.js"
 

@@ -1,5 +1,6 @@
 import { database } from "../../../../app/database/index.js"
 import { ApiError } from "../../../../app/errors/apiError.js"
+import { getPointsStats } from "../scores/helpers/points.js"
 import { ScoresService } from "../scores/scores.service.js"
 import { GamePlayerStatsService } from "../stats/gamePlayerStats/service.js"
 import { GameTeamStatsService } from "../stats/gameTeamStats/service.js"
@@ -40,13 +41,11 @@ export class TeamsService {
     ])
 
     return {
-      teamFebId: data.team_feb_id,
-      name: data.name,
-      prettyName: data.pretty_name,
-      leagueId: data.league_id,
+      ...mapTeamDataFromSupabase(data),
       teamStats: teamStats.stats,
       scores,
       playerStats,
+      points: getPointsStats(teamFebId, scores),
     }
   }
 }

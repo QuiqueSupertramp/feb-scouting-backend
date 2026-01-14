@@ -2,6 +2,7 @@ import { database } from "../../../../app/database/index.js"
 import { ApiError } from "../../../../app/errors/apiError.js"
 import { getClassification } from "./helpers/classification.js"
 import { getAverageScore } from "./helpers/getAverageScore.js"
+import { getPointsStats } from "./helpers/points.js"
 import { mapScoreFromSupabase, mapScoreToSupabase } from "./scores.mappers.js"
 import type { Score } from "./scores.types.js"
 
