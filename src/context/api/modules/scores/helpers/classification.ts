@@ -75,8 +75,8 @@ export const getClassifications = (scores: Score[]): Classifications => {
       localStanding.local.wins++
       awayStanding.away.losses++
     } else {
-      awayStanding.local.wins++
-      localStanding.away.losses++
+      awayStanding.away.wins++
+      localStanding.local.losses++
     }
   }
 
