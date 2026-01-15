@@ -329,7 +329,37 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      player_avg_points: {
+        Row: {
+          assists: number | null
+          defensive_rebounds: number | null
+          free_throws: number | null
+          games: number | null
+          minutes: number | null
+          name: string | null
+          offensive_rebounds: number | null
+          pir: number | null
+          player_feb_id: string | null
+          points: number | null
+          steals: number | null
+          team_feb_id: string | null
+          team_name: string | null
+          team_pretty_name: string | null
+          three_points: number | null
+          total_rebounds: number | null
+          turnovers: number | null
+          two_points: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "game_player_stats_team_feb_id_fkey"
+            columns: ["team_feb_id"]
+            isOneToOne: false
+            referencedRelation: "teams"
+            referencedColumns: ["team_feb_id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
