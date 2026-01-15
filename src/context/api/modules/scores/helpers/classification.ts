@@ -97,21 +97,21 @@ export const getClassifications = (scores: ScoreWithNames[]): Classifications =>
 
   return {
     total: teamsTable
-      .map((t) => ({ teamFebId: t.teamFebId, ...t.total }))
+      .map((t) => ({ teamFebId: t.teamFebId, name: t.name, prettyName: t.prettyName, ...t.total }))
       .sort((a, b) => {
         if (b.wins !== a.wins) return b.wins - a.wins
         if (b.losses !== a.losses) return a.losses - b.losses
         return b.points - b.pointsAgainst - (a.points - a.pointsAgainst)
       }),
     local: teamsTable
-      .map((t) => ({ teamFebId: t.teamFebId, ...t.local }))
+      .map((t) => ({ teamFebId: t.teamFebId, name: t.name, prettyName: t.prettyName, ...t.local }))
       .sort((a, b) => {
         if (b.wins !== a.wins) return b.wins - a.wins
         if (b.losses !== a.losses) return a.losses - b.losses
         return b.points - b.pointsAgainst - (a.points - a.pointsAgainst)
       }),
     away: teamsTable
-      .map((t) => ({ teamFebId: t.teamFebId, ...t.away }))
+      .map((t) => ({ teamFebId: t.teamFebId, name: t.name, prettyName: t.prettyName, ...t.away }))
       .sort((a, b) => {
         if (b.wins !== a.wins) return b.wins - a.wins
         if (b.losses !== a.losses) return a.losses - b.losses
