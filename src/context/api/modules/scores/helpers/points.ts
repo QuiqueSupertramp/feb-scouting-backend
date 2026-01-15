@@ -23,8 +23,8 @@ export const getPointsStats = (teamFebId: string, scores: Score[]) => {
 
   const quartersAsLocal = getQuarters(localScores, "localQuarters")
   const quartersAgainstAsLocal = getQuarters(localScores, "awayQuarters")
-  const quartersAsAway = getQuarters(awayScores, "localQuarters")
-  const quartersAgainstAsAway = getQuarters(awayScores, "awayQuarters")
+  const quartersAsAway = getQuarters(awayScores, "awayQuarters")
+  const quartersAgainstAsAway = getQuarters(awayScores, "localQuarters")
 
   const totalQuarters = [
     quartersAsLocal[0] + quartersAsAway[0],
