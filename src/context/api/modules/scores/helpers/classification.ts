@@ -10,6 +10,8 @@ interface StandingRow {
 
 interface Standings {
   teamFebId: string
+  name: string
+  prettyName: string
   total: StandingRow
   local: StandingRow
   away: StandingRow
@@ -27,11 +29,13 @@ interface Classifications {
 export const getClassifications = (scores: ScoreWithNames[]): Classifications => {
   const table = new Map<string, Standings>()
 
-  const getOrCreate = (teamFebId: string): Standings => {
+  const getOrCreate = (teamFebId: string, name: string, prettyName: string): Standings => {
     let row = table.get(teamFebId)
     if (!row) {
       row = {
         teamFebId,
+        name,
+        prettyName,
         total: {
           games: 0,
           wins: 0,
@@ -60,8 +64,8 @@ export const getClassifications = (scores: ScoreWithNames[]): Classifications =>
   }
 
   for (const game of scores) {
-    const localStanding = getOrCreate(game.localTeamFebId)
-    const awayStanding = getOrCreate(game.awayTeamFebId)
+    const localStanding = getOrCreate(game.localTeamFebId, game.localName, game.localPrettyName)
+    const awayStanding = getOrCreate(game.awayTeamFebId, game.awayName, game.awayPrettyName)
 
     localStanding.local.games++
     awayStanding.away.games++
