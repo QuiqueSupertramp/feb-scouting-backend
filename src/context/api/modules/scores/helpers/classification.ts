@@ -1,4 +1,4 @@
-import type { Score } from "../scores.types.js"
+import type { ScoreWithNames } from "../scores.types.js"
 
 interface StandingRow {
   games: number
@@ -24,7 +24,7 @@ interface Classifications {
   away: Classification[]
 }
 
-export const getClassifications = (scores: Score[]): Classifications => {
+export const getClassifications = (scores: ScoreWithNames[]): Classifications => {
   const table = new Map<string, Standings>()
 
   const getOrCreate = (teamFebId: string): Standings => {

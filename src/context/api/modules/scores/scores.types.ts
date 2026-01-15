@@ -13,10 +13,11 @@ export interface Score {
   awayQuarters: number[]
 }
 
-export type ScoreSupabase = Database["public"]["Tables"]["scores"]["Row"]
-
-export interface TeamScoreAverage {
-  teamFebId: string
-  avgPoints: number
-  avgQuarters: number[]
+export interface ScoreWithNames extends Score {
+  localName: string
+  localPrettyName: string
+  awayName: string
+  awayPrettyName: string
 }
+
+export type ScoreSupabase = Database["public"]["Tables"]["scores"]["Row"]
