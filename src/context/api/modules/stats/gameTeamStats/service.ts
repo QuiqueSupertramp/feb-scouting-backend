@@ -17,7 +17,15 @@ export class GameTeamStatsService {
       .filter("team_feb_id", "eq", teamFebId)
     if (error || !data) throw new ApiError(status, statusText, error.code)
 
-    return getAverageGameTeamStats(data.map(mapGameTeamStatsFromSupabase))
+    const dataMapped = data.map(mapGameTeamStatsFromSupabase)
+    const localGamesStats = dataMapped.filter((d) => d.local)
+    const awayGamesStats = dataMapped.filter((d) => !d.local)
+
+    return {
+      total: getAverageGameTeamStats(dataMapped),
+      local: getAverageGameTeamStats(localGamesStats),
+      away: getAverageGameTeamStats(awayGamesStats),
+    }
   }
 
   getLeagueStats = async () => {

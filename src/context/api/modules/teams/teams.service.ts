@@ -42,7 +42,7 @@ export class TeamsService {
 
     return {
       ...mapTeamDataFromSupabase(data),
-      teamStats: teamStats.stats,
+      teamStats,
       scores,
       playerStats,
       points: getPointsStats(teamFebId, scores),
