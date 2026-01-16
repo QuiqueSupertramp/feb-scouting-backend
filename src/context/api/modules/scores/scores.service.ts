@@ -1,8 +1,7 @@
 import { database } from "../../../../app/database/index.js"
 import { ApiError } from "../../../../app/errors/apiError.js"
 import { getClassifications } from "./helpers/classification.js"
-import { getAverageScore } from "./helpers/getAverageScore.js"
-import { mapScoreFromSupabase, mapScoreToSupabase, mapScoreWithNamesFromSupabase } from "./scores.mappers.js"
+import { mapScoreToSupabase, mapScoreWithNamesFromSupabase } from "./scores.mappers.js"
 import type { Score } from "./scores.types.js"
 
 export class ScoresService {
@@ -20,33 +19,23 @@ export class ScoresService {
   getByTeamId = async (teamFebId: string) => {
     const { data, error, status, statusText } = await database
       .from("scores")
-      .select("*")
+      .select(
+        `*,local_team:teams!local_team_feb_id(name, pretty_name),away_team:teams!away_team_feb_id(name, pretty_name)`,
+      )
       .or(`local_team_feb_id.eq.${teamFebId}, away_team_feb_id.eq.${teamFebId}`)
       .order("round", { ascending: false })
 
     if (error || !data) throw new ApiError(status, statusText, error.code)
 
-    return data.map(mapScoreFromSupabase)
-  }
-
-  getAverageByTeamId = async (teamFebId: string) => {
-    const { data, error, status, statusText } = await database
-      .from("scores")
-      .select("*")
-      .or(`local_team_feb_id.eq.${teamFebId}, away_team_feb_id.eq.${teamFebId}`)
-
-    if (error || !data) throw new ApiError(status, statusText, error.code)
-
-    const scoresMapped = data.map(mapScoreFromSupabase)
-    return getAverageScore(scoresMapped, teamFebId)
+    return data.map(mapScoreWithNamesFromSupabase)
   }
 
   getClassification = async () => {
-    const { data, error, status, statusText } = await database.from("scores").select(`
-    *,
-    local_team:teams!local_team_feb_id(name, pretty_name),
-    away_team:teams!away_team_feb_id(name, pretty_name)
-  `)
+    const { data, error, status, statusText } = await database
+      .from("scores")
+      .select(
+        `*,local_team:teams!local_team_feb_id(name, pretty_name),away_team:teams!away_team_feb_id(name, pretty_name)`,
+      )
     if (error || !data) throw new ApiError(status, statusText, error.code)
     return getClassifications(data.map(mapScoreWithNamesFromSupabase))
   }
