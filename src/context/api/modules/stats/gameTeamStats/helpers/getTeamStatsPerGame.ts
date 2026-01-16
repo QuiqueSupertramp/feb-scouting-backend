@@ -3,7 +3,7 @@ import { divideShots } from "../../helpers.js"
 import type { ShotStats } from "../../stats.types.js"
 import type { GameTeamStats } from "../types.js"
 
-export const getTeamStatsPerGame = (stats: Omit<GameTeamStats, "gameFebId" | "teamFebId">, games: number) => {
+export const getTeamStatsPerGame = (stats: Omit<GameTeamStats, "gameFebId" | "teamFebId" | "local">, games: number) => {
   const statsEntries = Object.entries(stats)
   const statsEntriesMapped = statsEntries.map(([key, value]) => {
     if (["twoPoints", "threePoints", "fieldGoals", "freeThrows"].includes(key)) {

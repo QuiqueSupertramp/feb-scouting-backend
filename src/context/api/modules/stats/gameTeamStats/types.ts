@@ -4,6 +4,7 @@ import type { ShotStats } from "../stats.types.js"
 export interface GameTeamStats {
   gameFebId: string
   teamFebId: string
+  local: boolean
   minutes: number
   points: number
   twoPoints: ShotStats

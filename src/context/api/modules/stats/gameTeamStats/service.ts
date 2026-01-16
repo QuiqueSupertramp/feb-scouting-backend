@@ -27,14 +27,3 @@ export class GameTeamStatsService {
     return getAverageGameTeamStats(data.map(mapGameTeamStatsFromSupabase)).stats
   }
 }
-
-export const groupByTeamFebId = (items: GameTeamStats[]) =>
-  Object.values(
-    items.reduce(
-      (acc, item) => {
-        ;(acc[item.teamFebId] ??= []).push(item)
-        return acc
-      },
-      {} as Record<string, any[]>,
-    ),
-  ) as GameTeamStats[][]

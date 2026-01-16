@@ -4,6 +4,7 @@ import type { GameTeamStats, GameTeamStatsSupabase } from "./types.js"
 export const mapGameTeamStatsToSupabase = (stats: GameTeamStats): GameTeamStatsSupabase => ({
   team_feb_id: stats.teamFebId,
   game_feb_id: stats.gameFebId,
+  local: stats.local,
   minutes: stats.minutes,
   points: stats.points,
   two_points_made: stats.twoPoints.made,
@@ -27,6 +28,7 @@ export const mapGameTeamStatsToSupabase = (stats: GameTeamStats): GameTeamStatsS
 export const mapGameTeamStatsFromSupabase = (stats: GameTeamStatsSupabase): GameTeamStats => ({
   teamFebId: stats.team_feb_id,
   gameFebId: stats.game_feb_id,
+  local: stats.local,
   minutes: stats.minutes,
   points: stats.points,
   twoPoints: {

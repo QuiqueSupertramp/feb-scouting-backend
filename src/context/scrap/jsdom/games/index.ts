@@ -40,7 +40,7 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
     t.textContent.trim(),
   )
 
-  const playerStats: Omit<GamePlayerStats, "gameFebId" | "teamFebId">[][] = Array.from(
+  const playerStats: Omit<GamePlayerStats, "gameFebId" | "teamFebId" | "local">[][] = Array.from(
     document.querySelectorAll<HTMLDivElement>(".responsive-scroll table tbody"),
   )
     .filter(removeEmptyItems)
@@ -116,7 +116,7 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
   const teamStats =
     Array.from(document.querySelectorAll<HTMLDivElement>(".responsive-scroll table tbody"))
       .filter(removeEmptyItems)
-      .map((body) => {
+      .flatMap((body) => {
         return Array.from(body.querySelectorAll("tr"))
           .filter(removeEmptyItems)
           .filter((r) => r.classList.contains("row-total"))
@@ -181,8 +181,7 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
               pir: Number(cols[20]?.textContent ?? 0),
             }
           })
-      })
-      .flat() ?? []
+      }) ?? []
 
   return {
     gameFebId,
@@ -195,12 +194,14 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
       teamStats: {
         gameFebId,
         teamFebId: localTeamFebId,
+        local: true,
         ...teamStats[0],
       } as GameTeamStats,
       playerStats:
         playerStats[0]?.map((p) => ({
           gameFebId,
           teamFebId: localTeamFebId,
+          local: true,
           ...p,
         })) ?? [],
     },
@@ -213,12 +214,14 @@ export const scrapGame = async (gameFebId: string): Promise<ScrapGameData> => {
       teamStats: {
         gameFebId,
         teamFebId: awayTeamFebId,
+        local: false,
         ...teamStats[1],
       } as GameTeamStats,
       playerStats:
         playerStats[1]?.map((p) => ({
           gameFebId,
           teamFebId: awayTeamFebId,
+          local: false,
           ...p,
         })) ?? [],
     },

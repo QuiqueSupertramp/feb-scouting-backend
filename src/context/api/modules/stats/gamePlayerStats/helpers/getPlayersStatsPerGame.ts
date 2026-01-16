@@ -4,7 +4,7 @@ import type { ShotStats } from "../../stats.types.js"
 import type { GamePlayerStats } from "../types.js"
 
 export const getPlayerStatsPerGame = (
-  stats: Omit<GamePlayerStats, "teamFebId" | "playerFebId" | "name" | "gameFebId">,
+  stats: Omit<GamePlayerStats, "teamFebId" | "playerFebId" | "name" | "gameFebId" | "local">,
   games: number,
 ) => {
   const statsEntries = Object.entries(stats)

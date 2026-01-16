@@ -5,6 +5,7 @@ export interface GamePlayerStats {
   playerFebId: string
   gameFebId: string
   teamFebId: string
+  local: boolean
   name: string
   minutes: number
   points: number
@@ -30,5 +31,5 @@ export interface PlayerStatsSummary {
   playerFebId: string
   name: string
   games: string[]
-  stats: Omit<GamePlayerStats, "teamFebId" | "playerFebId" | "name" | "gameFebId">
+  stats: Omit<GamePlayerStats, "teamFebId" | "playerFebId" | "name" | "gameFebId" | "local">
 }

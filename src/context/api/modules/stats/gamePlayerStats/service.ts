@@ -1,5 +1,4 @@
 import { database } from "../../../../../app/database/index.js"
-import type { Database } from "../../../../../app/database/supabase.js"
 import { ApiError } from "../../../../../app/errors/apiError.js"
 import { getAverageGamePlayerStats } from "./helpers/getAverageGamePlayerStats.js"
 import { mapGamePlayerStatsFromSupabase, mapGamePlayerStatsToSupabase } from "./mappers.js"

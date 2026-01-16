@@ -40,6 +40,7 @@ export type Database = {
           free_throws_attempted: number
           free_throws_made: number
           game_feb_id: string
+          local: boolean
           minutes: number
           name: string
           offensive_rebounds: number
@@ -64,6 +65,7 @@ export type Database = {
           free_throws_attempted: number
           free_throws_made: number
           game_feb_id: string
+          local: boolean
           minutes: number
           name: string
           offensive_rebounds: number
@@ -88,6 +90,7 @@ export type Database = {
           free_throws_attempted?: number
           free_throws_made?: number
           game_feb_id?: string
+          local?: boolean
           minutes?: number
           name?: string
           offensive_rebounds?: number
@@ -130,6 +133,7 @@ export type Database = {
           free_throws_attempted: number
           free_throws_made: number
           game_feb_id: string
+          local: boolean
           minutes: number
           offensive_rebounds: number
           pir: number
@@ -152,6 +156,7 @@ export type Database = {
           free_throws_attempted: number
           free_throws_made: number
           game_feb_id: string
+          local: boolean
           minutes: number
           offensive_rebounds: number
           pir: number
@@ -174,6 +179,7 @@ export type Database = {
           free_throws_attempted?: number
           free_throws_made?: number
           game_feb_id?: string
+          local?: boolean
           minutes?: number
           offensive_rebounds?: number
           pir?: number
