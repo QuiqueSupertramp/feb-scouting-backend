@@ -27,5 +27,5 @@ export type GameTeamStatsSupabase = Database["public"]["Tables"]["game_team_stat
 export interface TeamStatsSummary {
   teamFebId: string
   games: string[]
-  stats: Omit<GameTeamStats, "gameFebId" | "teamFebId">
+  stats: Omit<GameTeamStats, "gameFebId" | "teamFebId" | "local">
 }

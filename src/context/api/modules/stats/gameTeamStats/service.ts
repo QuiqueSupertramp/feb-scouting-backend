@@ -22,9 +22,9 @@ export class GameTeamStatsService {
     const awayGamesStats = dataMapped.filter((d) => !d.local)
 
     return {
-      total: getAverageGameTeamStats(dataMapped),
-      local: getAverageGameTeamStats(localGamesStats),
-      away: getAverageGameTeamStats(awayGamesStats),
+      total: getAverageGameTeamStats(dataMapped).stats,
+      local: getAverageGameTeamStats(localGamesStats).stats,
+      away: getAverageGameTeamStats(awayGamesStats).stats,
     }
   }
 
