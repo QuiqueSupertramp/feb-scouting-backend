@@ -1,11 +1,19 @@
 import { CronJob } from "cron"
 import { cronGames } from "../games/index.js"
+import { styleText } from "node:util"
 
 new CronJob(
   "0 30 21 * * 1-5",
   async () => {
-    const res = await cronGames()
-    console.log("cronGames:", res)
+    try {
+      const res = await cronGames()
+      console.log("cronGames:", res)
+    } catch (error) {
+      console.log('-----------------------------------------')
+      console.log(styleText('red', '❌ Error on games job'))
+      console.log(error)
+      console.log('-----------------------------------------')
+    }
   },
   null,
   true,
@@ -15,8 +23,15 @@ new CronJob(
 new CronJob(
   "0 0 17-23 * * 6",
   async () => {
-    const res = await cronGames()
-    console.log("cronGames:", res)
+    try {
+      const res = await cronGames()
+      console.log("cronGames:", res)
+    } catch (error) {
+      console.log('-----------------------------------------')
+      console.log(styleText('red', '❌ Error on games job'))
+      console.log(error)
+      console.log('-----------------------------------------')
+    }
   },
   null,
   true,
@@ -26,8 +41,15 @@ new CronJob(
 new CronJob(
   "0 0 12-23 * * 0",
   async () => {
-    const res = await cronGames()
-    console.log("cronGames:", res)
+    try {
+      const res = await cronGames()
+      console.log("cronGames:", res)
+    } catch (error) {
+      console.log('-----------------------------------------')
+      console.log(styleText('red', '❌ Error on games job'))
+      console.log(error)
+      console.log('-----------------------------------------')
+    }
   },
   null,
   true,
