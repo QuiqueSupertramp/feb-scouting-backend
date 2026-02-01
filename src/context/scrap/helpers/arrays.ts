@@ -1,4 +1,4 @@
-import type { ScrapScore } from "../jsdom/score/types.js"
+import type { ScrapScore } from "../cheerio/score/index.js"
 
 export const removeDuplicateScores = (scores: ScrapScore[]): ScrapScore[] => {
   const uniques = new Set<string>()
