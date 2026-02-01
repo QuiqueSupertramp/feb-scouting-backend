@@ -5,6 +5,7 @@ export const mapGameTeamStatsToSupabase = (stats: GameTeamStats): GameTeamStatsS
   team_feb_id: stats.teamFebId,
   game_feb_id: stats.gameFebId,
   local: stats.local,
+  win: stats.win,
   minutes: stats.minutes,
   points: stats.points,
   two_points_made: stats.twoPoints.made,
@@ -29,6 +30,7 @@ export const mapGameTeamStatsFromSupabase = (stats: GameTeamStatsSupabase): Game
   teamFebId: stats.team_feb_id,
   gameFebId: stats.game_feb_id,
   local: stats.local,
+  win: stats.win,
   minutes: stats.minutes,
   points: stats.points,
   twoPoints: {

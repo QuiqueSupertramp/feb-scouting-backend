@@ -1,9 +1,9 @@
 import { round2Decimals } from "../../../../../scrap/helpers/decimals.js"
 import { divideShots } from "../../helpers.js"
 import type { ShotStats } from "../../stats.types.js"
-import type { GameTeamStats } from "../types.js"
+import type { TeamStatsAverage } from "../types.js"
 
-export const getTeamStatsPerGame = (stats: Omit<GameTeamStats, "gameFebId" | "teamFebId" | "local">, games: number) => {
+export const getTeamStatsPerGame = (stats: TeamStatsAverage, games: number) => {
   const statsEntries = Object.entries(stats)
   const statsEntriesMapped = statsEntries.map(([key, value]) => {
     if (["twoPoints", "threePoints", "fieldGoals", "freeThrows"].includes(key)) {
@@ -13,5 +13,5 @@ export const getTeamStatsPerGame = (stats: Omit<GameTeamStats, "gameFebId" | "te
     return [key, round2Decimals((value as number) / games)]
   })
 
-  return Object.fromEntries(statsEntriesMapped) as unknown as Omit<GameTeamStats, "gameFebId" | "teamFebId">
+  return Object.fromEntries(statsEntriesMapped) as unknown as TeamStatsAverage
 }

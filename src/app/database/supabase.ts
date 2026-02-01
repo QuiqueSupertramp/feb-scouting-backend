@@ -40,6 +40,7 @@ export type Database = {
           free_throws_attempted: number
           free_throws_made: number
           game_feb_id: string
+          jersey_number: string
           local: boolean
           minutes: number
           name: string
@@ -47,6 +48,7 @@ export type Database = {
           pir: number
           player_feb_id: string
           points: number
+          starter_five: boolean
           steals: number
           team_feb_id: string
           three_points_attempted: number
@@ -54,6 +56,7 @@ export type Database = {
           turnovers: number
           two_points_attempted: number
           two_points_made: number
+          win: boolean
         }
         Insert: {
           assists: number
@@ -65,6 +68,7 @@ export type Database = {
           free_throws_attempted: number
           free_throws_made: number
           game_feb_id: string
+          jersey_number?: string
           local: boolean
           minutes: number
           name: string
@@ -72,6 +76,7 @@ export type Database = {
           pir: number
           player_feb_id: string
           points: number
+          starter_five: boolean
           steals: number
           team_feb_id: string
           three_points_attempted: number
@@ -79,6 +84,7 @@ export type Database = {
           turnovers: number
           two_points_attempted: number
           two_points_made: number
+          win: boolean
         }
         Update: {
           assists?: number
@@ -90,6 +96,7 @@ export type Database = {
           free_throws_attempted?: number
           free_throws_made?: number
           game_feb_id?: string
+          jersey_number?: string
           local?: boolean
           minutes?: number
           name?: string
@@ -97,6 +104,7 @@ export type Database = {
           pir?: number
           player_feb_id?: string
           points?: number
+          starter_five?: boolean
           steals?: number
           team_feb_id?: string
           three_points_attempted?: number
@@ -104,6 +112,7 @@ export type Database = {
           turnovers?: number
           two_points_attempted?: number
           two_points_made?: number
+          win?: boolean
         }
         Relationships: [
           {
@@ -145,6 +154,7 @@ export type Database = {
           turnovers: number
           two_points_attempted: number
           two_points_made: number
+          win: boolean
         }
         Insert: {
           assists: number
@@ -168,6 +178,7 @@ export type Database = {
           turnovers: number
           two_points_attempted: number
           two_points_made: number
+          win: boolean
         }
         Update: {
           assists?: number
@@ -191,6 +202,7 @@ export type Database = {
           turnovers?: number
           two_points_attempted?: number
           two_points_made?: number
+          win?: boolean
         }
         Relationships: [
           {

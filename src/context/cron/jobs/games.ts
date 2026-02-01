@@ -1,6 +1,6 @@
 import { CronJob } from "cron"
 import { cronGames } from "../games/index.js"
-import { styleText } from "node:util"
+import { logErrorBLock } from "../../../app/logger.js"
 
 new CronJob(
   "0 30 21 * * 1-5",
@@ -9,10 +9,10 @@ new CronJob(
       const res = await cronGames()
       console.log("cronGames:", res)
     } catch (error) {
-      console.log('-----------------------------------------')
-      console.log(styleText('red', '❌ Error on games job'))
+      console.log("-----------------------------------------")
+      logErrorBLock(["❌ Error on games job"])
       console.log(error)
-      console.log('-----------------------------------------')
+      console.log("-----------------------------------------")
     }
   },
   null,
@@ -27,10 +27,10 @@ new CronJob(
       const res = await cronGames()
       console.log("cronGames:", res)
     } catch (error) {
-      console.log('-----------------------------------------')
-      console.log(styleText('red', '❌ Error on games job'))
+      console.log("-----------------------------------------")
+      logErrorBLock(["❌ Error on games job"])
       console.log(error)
-      console.log('-----------------------------------------')
+      console.log("-----------------------------------------")
     }
   },
   null,
@@ -45,10 +45,10 @@ new CronJob(
       const res = await cronGames()
       console.log("cronGames:", res)
     } catch (error) {
-      console.log('-----------------------------------------')
-      console.log(styleText('red', '❌ Error on games job'))
+      console.log("-----------------------------------------")
+      logErrorBLock(["❌ Error on games job"])
       console.log(error)
-      console.log('-----------------------------------------')
+      console.log("-----------------------------------------")
     }
   },
   null,

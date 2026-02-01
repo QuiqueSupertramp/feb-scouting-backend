@@ -9,17 +9,11 @@ export class GamePlayerStatsService {
     "assists",
     "defensive_rebounds",
     "free_throws",
-    "games",
     "minutes",
-    "name",
     "offensive_rebounds",
     "pir",
-    "player_feb_id",
     "points",
     "steals",
-    "team_feb_id",
-    "team_name",
-    "team_pretty_name",
     "three_points",
     "total_rebounds",
     "turnovers",
@@ -28,6 +22,7 @@ export class GamePlayerStatsService {
 
   save = async (stats: GamePlayerStats[]) => {
     const { error } = await database.from("game_player_stats").upsert(stats.map(mapGamePlayerStatsToSupabase))
+    console.log("error:", error)
     return !error
   }
 

@@ -1,22 +1,21 @@
 import type { Request, Response, NextFunction } from "express"
 import { ApiError } from "../errors/apiError.js"
+import { logError, logErrorBLock } from "../logger.js"
 
 export const errorHandler = (err: unknown, _req: Request, res: Response, _next: NextFunction): void => {
-  console.error(err)
+  const isApiError = err instanceof ApiError
+  const status = isApiError ? err.statusCode : 500
+  const message = isApiError ? err.message : "Internal server error"
+  const details = isApiError ? err.details : undefined
 
-  if (err instanceof ApiError) {
-    res.status(err.statusCode).json({
-      success: false,
-      status: err.statusCode,
-      message: err.message,
-      details: err.details,
-    })
-    return
-  }
+  logErrorBLock([`status: ${status}`, `message: ${message}`])
+  console.error(logError("details:"), details)
+  console.error(logError("error:"), err)
 
-  res.status(500).json({
+  res.status(status).json({
     success: false,
-    status: 500,
-    message: "Internal server error",
+    status,
+    message,
+    details,
   })
 }

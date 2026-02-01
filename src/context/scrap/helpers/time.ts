@@ -1,4 +1,4 @@
-export const getMillisecondsFromTime = (time: string) => {
+export const getMillisecondsFromTime = (time: string = "") => {
   const [m = 0, s = 0] = time.split(":")
   const minutes = Number(m) || 0
   const seconds = Number(s) || 0

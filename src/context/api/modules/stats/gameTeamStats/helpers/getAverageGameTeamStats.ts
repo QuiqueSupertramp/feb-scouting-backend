@@ -1,14 +1,14 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <any> */
 import { getTeamStatsPerGame } from "./getTeamStatsPerGame.js"
 import type { ShotStats } from "../../stats.types.js"
-import type { GameTeamStats, TeamStatsSummary } from "../types.js"
+import type { GameTeamStats, TeamStatsAverage, TeamStatsSummary } from "../types.js"
 
 export const getAverageGameTeamStats = (items: GameTeamStats[]): TeamStatsSummary => {
   const teamFebId = items[0]?.teamFebId ?? ""
   const games = items.map((i) => i.gameFebId)
 
-  const stats = {} as Omit<GameTeamStats, "gameFebId" | "teamFebId" | "local">
-  const base = items[0] as Omit<GameTeamStats, "gameFebId" | "teamFebId" | "local">
+  const stats = {} as TeamStatsAverage
+  const base = items[0] as TeamStatsAverage
 
   for (const key of Object.keys(base) as (keyof typeof base)[]) {
     const value = base[key]

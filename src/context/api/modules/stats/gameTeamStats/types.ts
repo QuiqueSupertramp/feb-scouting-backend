@@ -5,6 +5,7 @@ export interface GameTeamStats {
   gameFebId: string
   teamFebId: string
   local: boolean
+  win: boolean
   minutes: number
   points: number
   twoPoints: ShotStats
@@ -27,5 +28,7 @@ export type GameTeamStatsSupabase = Database["public"]["Tables"]["game_team_stat
 export interface TeamStatsSummary {
   teamFebId: string
   games: string[]
-  stats: Omit<GameTeamStats, "gameFebId" | "teamFebId" | "local">
+  stats: TeamStatsAverage
 }
+
+export type TeamStatsAverage = Omit<GameTeamStats, "gameFebId" | "teamFebId" | "local" | "win">

@@ -1,10 +1,13 @@
 import type { Database } from "../../../../app/database/supabase.js"
 
-export interface Score {
+export interface Score extends GameScore {
   gameFebId: string
   round: number
   date: string
   time: string
+}
+
+export interface GameScore {
   localTeamFebId: string
   localScore: number
   localQuarters: number[]
