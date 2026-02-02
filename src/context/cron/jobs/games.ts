@@ -1,18 +1,15 @@
 import { CronJob } from "cron"
 import { cronGames } from "../games/index.js"
-import { logErrorBLock } from "../../../app/logger.js"
+import { LOGGER } from "../../../app/logger.js"
 
 new CronJob(
   "0 30 21 * * 1-5",
   async () => {
     try {
       const res = await cronGames()
-      console.log("cronGames:", res)
+      LOGGER.info([["cronGames:", res]])
     } catch (error) {
-      console.log("-----------------------------------------")
-      logErrorBLock(["❌ Error on games job"])
-      console.log(error)
-      console.log("-----------------------------------------")
+      LOGGER.error(["❌ Error on games job", ["error:", error]])
     }
   },
   null,
@@ -25,12 +22,9 @@ new CronJob(
   async () => {
     try {
       const res = await cronGames()
-      console.log("cronGames:", res)
+      LOGGER.info([["cronGames:", res]])
     } catch (error) {
-      console.log("-----------------------------------------")
-      logErrorBLock(["❌ Error on games job"])
-      console.log(error)
-      console.log("-----------------------------------------")
+      LOGGER.error(["❌ Error on games job", ["error:", error]])
     }
   },
   null,
@@ -43,12 +37,9 @@ new CronJob(
   async () => {
     try {
       const res = await cronGames()
-      console.log("cronGames:", res)
+      LOGGER.info([["cronGames:", res]])
     } catch (error) {
-      console.log("-----------------------------------------")
-      logErrorBLock(["❌ Error on games job"])
-      console.log(error)
-      console.log("-----------------------------------------")
+      LOGGER.error(["❌ Error on games job", ["error:", error]])
     }
   },
   null,

@@ -1,6 +1,6 @@
 import * as cheerio from "cheerio"
 import type { CheerioAPI } from "cheerio"
-import { logErrorBLock } from "../../../app/logger.js"
+import { LOGGER } from "../../../app/logger.js"
 
 interface ScrapeOptions {
   timeout?: number
@@ -31,7 +31,7 @@ export const getDocument = async (url: string, options: ScrapeOptions = {}): Pro
 
       if (!res.ok) {
         if ([400, 401, 403, 404, 410].includes(res.status)) {
-          logErrorBLock([`url: ${url}`, `status: ${res.status}`, `message: ❌ Fallo obteniendo el documento`])
+          LOGGER.error([`url: ${url}`, `status: ${res.status}`, `message: ❌ Fallo obteniendo el documento`])
           return undefined
         }
         throw new Error(`HTTP ${res.status}`)
@@ -49,7 +49,7 @@ export const getDocument = async (url: string, options: ScrapeOptions = {}): Pro
         const reason = (error as Error).name === "AbortError" ? "Timeout" : (error as Error).message
         const message = `❌ Fallo obteniendo el documento tras ${retries} intentos`
 
-        logErrorBLock([`url: ${url}`, `reason: ${reason}`, `message: ${message}`])
+        LOGGER.error([`url: ${url}`, `reason: ${reason}`, `message: ${message}`])
         return undefined
       }
 

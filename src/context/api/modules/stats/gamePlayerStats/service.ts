@@ -1,5 +1,6 @@
 import { database } from "../../../../../app/database/index.js"
 import { ApiError } from "../../../../../app/errors/apiError.js"
+import { LOGGER } from "../../../../../app/logger.js"
 import { getAverageGamePlayerStats } from "./helpers/getAverageGamePlayerStats.js"
 import { mapGamePlayerStatsFromSupabase, mapGamePlayerStatsToSupabase } from "./mappers.js"
 import type { GamePlayerStats } from "./types.js"
@@ -22,7 +23,7 @@ export class GamePlayerStatsService {
 
   save = async (stats: GamePlayerStats[]) => {
     const { error } = await database.from("game_player_stats").upsert(stats.map(mapGamePlayerStatsToSupabase))
-    console.log("error:", error)
+    LOGGER.error(["message: Error saving game player stats", ["error:", error]])
     return !error
   }
 

@@ -4,7 +4,7 @@ import { GameTeamStatsService } from "../../api/modules/stats/gameTeamStats/serv
 import { apiCache } from "../../../app/cache/lru.js"
 import { scrapGames } from "../../scrap/cheerio/games/index.js"
 import { getScoresToSave } from "./getScoresToSave.js"
-import { logErrorBLock } from "../../../app/logger.js"
+import { LOGGER } from "../../../app/logger.js"
 import type { ScrapScore } from "../../scrap/cheerio/score/index.js"
 
 const scoresService = new ScoresService()
@@ -35,17 +35,17 @@ export const cronGames = async () => {
   ])
 
   res[0].status === "fulfilled" && res[0].value === true
-    ? console.log(`⭐ Se han actualizado ${scoresToSave.length} scores`)
-    : logErrorBLock(["Error al actualizar scores"])
+    ? LOGGER.success(`⭐ Se han actualizado ${scoresToSave.length} scores`)
+    : LOGGER.error("Error al actualizar scores")
   res[1].status === "fulfilled" && res[1].value === true
-    ? console.log(`⭐ Se han actualizado ${games.teamStats.length} gameTeamStats`)
-    : logErrorBLock(["Error al actualizar gameTeamStats"])
+    ? LOGGER.success(`⭐ Se han actualizado ${games.teamStats.length} gameTeamStats`)
+    : LOGGER.error("Error al actualizar gameTeamStats")
   res[2].status === "fulfilled" && res[2].value === true
-    ? console.log(`⭐ Se han actualizado ${games.playerStats.length} gamePlayerStats`)
-    : logErrorBLock(["Error al actualizar gamePlayerStats"])
+    ? LOGGER.success(`⭐ Se han actualizado ${games.playerStats.length} gamePlayerStats`)
+    : LOGGER.error("Error al actualizar gamePlayerStats")
 
   apiCache.clear()
-  console.log("🚀 Cache clared")
+  LOGGER.info("🚀 Cache clared")
 
   return res
 }
