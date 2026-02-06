@@ -7,4 +7,4 @@ const gamePlayerStatsController = new GamePlayerStatsController()
 
 gamePlayerStatsRouter.get("/ranking", cacheMiddleware(), gamePlayerStatsController.getRanking)
 
-export default { router: gamePlayerStatsRouter, path: "/player-stats" }
+export const gamePlayerStatsRoutes = { router: gamePlayerStatsRouter, path: "/player-stats" }

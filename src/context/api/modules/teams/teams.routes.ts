@@ -8,4 +8,4 @@ const teamsController = new TeamsController()
 teamsRouter.get("/", cacheMiddleware(), teamsController.getAll)
 teamsRouter.get("/:teamFebId", cacheMiddleware(), teamsController.getById)
 
-export default { router: teamsRouter, path: "/teams" }
+export const teamsRoutes = { router: teamsRouter, path: "/teams" }

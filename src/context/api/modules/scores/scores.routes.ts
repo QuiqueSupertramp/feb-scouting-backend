@@ -8,4 +8,4 @@ const scoresController = new ScoresController()
 scoresRouter.get("/classification", cacheMiddleware(), scoresController.getClassification)
 scoresRouter.get("/:teamFebId", cacheMiddleware(), scoresController.getByTeamId)
 
-export default { router: scoresRouter, path: "/scores" }
+export const scoreRoutes = { router: scoresRouter, path: "/scores" }
