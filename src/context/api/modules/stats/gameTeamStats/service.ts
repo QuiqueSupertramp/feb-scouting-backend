@@ -20,11 +20,15 @@ export class GameTeamStatsService {
     const dataMapped = data.map(mapGameTeamStatsFromSupabase)
     const localGamesStats = dataMapped.filter((d) => d.local)
     const awayGamesStats = dataMapped.filter((d) => !d.local)
+    const winGameStats = dataMapped.filter((d) => d.win)
+    const lossGameStats = dataMapped.filter((d) => !d.win)
 
     return {
       total: getAverageGameTeamStats(dataMapped).stats,
       local: getAverageGameTeamStats(localGamesStats).stats,
       away: getAverageGameTeamStats(awayGamesStats).stats,
+      win: getAverageGameTeamStats(winGameStats).stats,
+      loss: getAverageGameTeamStats(lossGameStats).stats,
     }
   }
 
