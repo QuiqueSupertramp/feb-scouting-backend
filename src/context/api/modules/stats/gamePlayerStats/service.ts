@@ -23,7 +23,7 @@ export class GamePlayerStatsService {
 
   save = async (stats: GamePlayerStats[]) => {
     const { error } = await database.from("game_player_stats").upsert(stats.map(mapGamePlayerStatsToSupabase))
-    LOGGER.error(["message: Error saving game player stats", ["error:", error]])
+    if (error) LOGGER.error(["message: Error saving game player stats", ["error:", error]])
     return !error
   }
 
