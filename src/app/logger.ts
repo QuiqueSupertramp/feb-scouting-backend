@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <any> */
 import { styleText } from "node:util"
 
 const logError = (message: string) => console.error(styleText("redBright", message))
@@ -17,7 +18,7 @@ const logErrorBLock = (messages: Messages) => {
 }
 const logInfoBLock = (messages: Messages) => {
   logBlock(() => {
-    console.error(styleText(["blueBright", "bold"], "ℹ️ INFO"))
+    console.log(styleText(["blueBright", "bold"], "ℹ️ INFO"))
     messages.forEach((m) => {
       if (typeof m === "string") logInfo(m)
       else console.log(styleText("blueBright", m[0]), m[1])
@@ -26,7 +27,7 @@ const logInfoBLock = (messages: Messages) => {
 }
 const logSuccessBLock = (messages: Messages) => {
   logBlock(() => {
-    console.error(styleText(["greenBright", "bold"], "⭐ SUCCESS"))
+    console.log(styleText(["greenBright", "bold"], "⭐ SUCCESS"))
     messages.forEach((m) => {
       if (typeof m === "string") logSuccess(m)
       else console.log(styleText("greenBright", m[0]), m[1])
