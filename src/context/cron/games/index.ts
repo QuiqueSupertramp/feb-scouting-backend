@@ -12,40 +12,44 @@ const gameTeamStatsService = new GameTeamStatsService()
 const gamePlayerStatsService = new GamePlayerStatsService()
 
 export const cronGames = async () => {
-  const scores = await getScoresToSave()
-  if (scores.length === 0) {
+  const scoresToSave = await getScoresToSave()
+  if (scoresToSave.length === 0) {
     return "No hay partidos para actualizar"
   }
 
-  const scoresFilteredIds = scores.map((s) => s.gameFebId)
-  const games = await scrapGames(scoresFilteredIds)
+  const scoresToSaveIds = scoresToSave.map((s) => s.gameFebId)
+  const { scores, playerStats, teamStats } = await scrapGames(scoresToSaveIds)
 
-  const scoresToSave = games.scores.map((s) => {
-    const score = scores.find((sf) => sf.gameFebId === s.gameFebId) as ScrapScore
+  const scoresToSaveFiltered = scores.map((s) => {
+    const score = scoresToSave.find((sf) => sf.gameFebId === s.gameFebId) as ScrapScore
     return {
       ...score,
       ...s,
     }
   })
 
-  const res = await Promise.allSettled([
-    scoresService.save(scoresToSave),
-    gameTeamStatsService.save(games.teamStats),
-    gamePlayerStatsService.save(games.playerStats),
+  const scoreRes = await scoresService.save(scoresToSaveFiltered)
+
+  scoreRes === true
+    ? LOGGER.success(`⭐ Se han actualizado ${scoresToSaveFiltered.length} scores`)
+    : LOGGER.error("Error al actualizar scores")
+
+  if (!scoreRes) return
+
+  const [teamStatsRes, playerStatsRes] = await Promise.allSettled([
+    gameTeamStatsService.save(teamStats),
+    gamePlayerStatsService.save(playerStats),
   ])
 
-  res[0].status === "fulfilled" && res[0].value === true
-    ? LOGGER.success(`⭐ Se han actualizado ${scoresToSave.length} scores`)
-    : LOGGER.error("Error al actualizar scores")
-  res[1].status === "fulfilled" && res[1].value === true
-    ? LOGGER.success(`⭐ Se han actualizado ${games.teamStats.length} gameTeamStats`)
+  teamStatsRes.status === "fulfilled" && teamStatsRes.value === true
+    ? LOGGER.success(`⭐ Se han actualizado ${teamStats.length} gameTeamStats`)
     : LOGGER.error("Error al actualizar gameTeamStats")
-  res[2].status === "fulfilled" && res[2].value === true
-    ? LOGGER.success(`⭐ Se han actualizado ${games.playerStats.length} gamePlayerStats`)
+  playerStatsRes.status === "fulfilled" && playerStatsRes.value === true
+    ? LOGGER.success(`⭐ Se han actualizado ${playerStats.length} gamePlayerStats`)
     : LOGGER.error("Error al actualizar gamePlayerStats")
 
   apiCache.clear()
   LOGGER.info("🚀 Cache clared")
 
-  return res
+  return { scores: true, teamStats: teamStatsRes, playerStats: playerStatsRes }
 }
