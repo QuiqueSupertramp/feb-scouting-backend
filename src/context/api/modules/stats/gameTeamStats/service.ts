@@ -13,15 +13,22 @@ export class GameTeamStatsService {
   getByTeamId = async (teamFebId: string) => {
     const { data, error, status, statusText } = await database
       .from("game_team_stats")
-      .select("*")
+      .select("*, scores(date)")
       .filter("team_feb_id", "eq", teamFebId)
     if (error || !data) throw new ApiError(status, statusText, error.code)
+
+    const sorted = data?.sort((a, b) => {
+      const dateA = a.scores?.date ? new Date(a.scores.date).getTime() : 0
+      const dateB = b.scores?.date ? new Date(b.scores.date).getTime() : 0
+      return dateB - dateA
+    })
 
     const dataMapped = data.map(mapGameTeamStatsFromSupabase)
     const localGamesStats = dataMapped.filter((d) => d.local)
     const awayGamesStats = dataMapped.filter((d) => !d.local)
     const winGameStats = dataMapped.filter((d) => d.win)
     const lossGameStats = dataMapped.filter((d) => !d.win)
+    const lastGames = sorted.slice(0, 4).map(mapGameTeamStatsFromSupabase)
 
     return {
       total: getAverageGameTeamStats(dataMapped).stats,
@@ -29,6 +36,7 @@ export class GameTeamStatsService {
       away: getAverageGameTeamStats(awayGamesStats).stats,
       win: getAverageGameTeamStats(winGameStats).stats,
       loss: getAverageGameTeamStats(lossGameStats).stats,
+      last: getAverageGameTeamStats(lastGames).stats,
     }
   }
 

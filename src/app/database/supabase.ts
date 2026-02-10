@@ -68,7 +68,7 @@ export type Database = {
           free_throws_attempted: number
           free_throws_made: number
           game_feb_id: string
-          jersey_number?: string
+          jersey_number: string
           local: boolean
           minutes: number
           name: string
@@ -205,6 +205,13 @@ export type Database = {
           win?: boolean
         }
         Relationships: [
+          {
+            foreignKeyName: "game_team_stats_game_feb_id_fkey"
+            columns: ["game_feb_id"]
+            isOneToOne: false
+            referencedRelation: "scores"
+            referencedColumns: ["game_feb_id"]
+          },
           {
             foreignKeyName: "game_team_stats_team_feb_id_fkey"
             columns: ["team_feb_id"]

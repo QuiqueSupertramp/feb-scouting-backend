@@ -46,31 +46,6 @@ const mapPlayerFromFeb = (
   pir: Number(player[21] ?? 0),
 })
 
-const mapGamePlayersStats = ({
-  players,
-  score,
-  local,
-  gameFebId,
-}: {
-  players: string[][]
-  score: GameScore
-  local: boolean
-  gameFebId: string
-}): GamePlayerStats[] => {
-  const localTeamFebId = score.localTeamFebId
-  const awayTeamFebId = score.awayTeamFebId
-  const localWin = score.localScore > score.awayScore
-  const awayWin = score.awayScore > score.localScore
-
-  return players.map((player) => ({
-    gameFebId,
-    teamFebId: local ? localTeamFebId : awayTeamFebId,
-    local: false,
-    win: local ? localWin : awayWin,
-    ...mapPlayerFromFeb(player),
-  }))
-}
-
 export const mapGamesPlayersStats = ({
   gameFebId,
   score,
